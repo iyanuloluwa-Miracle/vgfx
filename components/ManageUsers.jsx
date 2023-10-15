@@ -28,7 +28,310 @@ import { CSVLink } from 'react-csv';
 
 const key = new NodeRSA({ b: 256 });
 
+
+const data = [
+  {
+    key: '1',
+    fullName: 'Atanda Damilare',
+    username: 'dammy',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Sept 17, 2022',
+    report: 45,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link
+          href={'/user-details'}
+          onClick={() => setDefaultUSerTab('1')}
+          passHref
+        >
+          <Button className="view-profile">View profile</Button>
+        </Link>
+
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '2',
+    fullName: 'Jide Ola',
+    username: 'Ola',
+    email: 'jideola@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Jun 12, 2020',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link
+          href={'/user-details'}
+          onClick={() => setDefaultUSerTab('1')}
+          passHref
+        >
+          <Button className="view-profile">View profile</Button>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '3',
+    fullName: 'Specter Omo',
+    username: 'Specter Damilare',
+    email: 'Specter@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 10,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '4',
+    fullName: 'Jesse Finn',
+    username: 'Finn',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Aug 16, 2020',
+    report: 22,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '5',
+    fullName: 'Atanda Damilare',
+    username: 'Ola',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Sept 17, 2022',
+    report: 45,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '6',
+    fullName: 'Jide Ola',
+    username: 'Damilare',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Jun 12, 2020',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '7',
+    fullName: 'Henry Etta',
+    username: 'Omo',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 10,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '8',
+    fullName: 'Jesse Finn',
+    username: 'Ola',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 22,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '9',
+    fullName: 'Specter Omo',
+    username: 'Finn',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 42,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '10',
+    fullName: 'Atanda Damilare',
+    username: 'Etta',
+    email: 'henryetta@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+];
+
 export default function ManageUsers() {
+  
   const { setDefaultUSerTab } = OverlayContext();
   const [incidentsData, setIncidentsData] = useState([]);
   const { Search } = Input;
@@ -36,6 +339,10 @@ export default function ManageUsers() {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState('all');
+
+  //SearchQuery
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState(data);
 
   // rsa start
 
@@ -57,6 +364,28 @@ export default function ManageUsers() {
     }).toString();
     setOutputText(encrypted);
     console.log(encrypted);
+  };
+
+  // Function to filter the data based on the search query
+  const filterData = () => {
+    const filtered = data.filter(item => {
+      return (
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.username.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  };
+
+
+
+  useEffect(() => {
+    filterData();
+  }, [searchQuery]);
+
+   // Function to handle search input changes
+   const handleSearchInputChange = e => {
+    setSearchQuery(e.target.value);
   };
 
 
@@ -188,306 +517,6 @@ export default function ManageUsers() {
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      fullName: 'Atanda Damilare',
-      username: 'dammy',
-      email: 'atandadray@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'Sept 17, 2022',
-      report: 45,
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link
-            href={'/user-details'}
-            onClick={() => setDefaultUSerTab('1')}
-            passHref
-          >
-            <Button className="view-profile">View profile</Button>
-          </Link>
-
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '2',
-      fullName: 'Jide Ola',
-      username: 'Ola',
-      email: 'jideola@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'Jun 12, 2020',
-      report: 2,
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link
-            href={'/user-details'}
-            onClick={() => setDefaultUSerTab('1')}
-            passHref
-          >
-            <Button className="view-profile">View profile</Button>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '3',
-      fullName: 'Specter Omo',
-      username: 'Specter Damilare',
-      email: 'Specter@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'May 8, 2021',
-      report: 10,
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '4',
-      fullName: 'Jesse Finn',
-      username: 'Finn',
-      email: 'jessefinn@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'Aug 16, 2020',
-      report: 22,
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '5',
-      fullName: 'Atanda Damilare',
-      username: 'Ola',
-      email: 'jessefinn@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'Sept 17, 2022',
-      report: 45,
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '6',
-      fullName: 'Jide Ola',
-      username: 'Damilare',
-      email: 'atandadray@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'Jun 12, 2020',
-      report: 2,
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '7',
-      fullName: 'Henry Etta',
-      username: 'Omo',
-      email: 'atandadray@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'May 8, 2021',
-      report: 10,
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '8',
-      fullName: 'Jesse Finn',
-      username: 'Ola',
-      email: 'jessefinn@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'May 8, 2021',
-      report: 22,
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '9',
-      fullName: 'Specter Omo',
-      username: 'Finn',
-      email: 'jessefinn@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'May 8, 2021',
-      report: 42,
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      key: '10',
-      fullName: 'Atanda Damilare',
-      username: 'Etta',
-      email: 'henryetta@gmail.com',
-      phone: '+2348123456790',
-      dateRegistered: 'May 8, 2021',
-      report: 2,
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Link
-              href={'/user-details'}
-              onClick={() => setDefaultUSerTab('1')}
-              passHref
-            >
-              <Button className="view-profile">View profile</Button>
-            </Link>
-          </Link>
-          <Link
-            href={'/user-details?defaultpage=2'}
-            onClick={() => setDefaultUSerTab('2')}
-            passHref
-          >
-            <Button className="view-report">View reports</Button>
-          </Link>
-        </div>
-      ),
-    },
-  ];
 
   const FetchJoke = async () => {
     const url = 'https://icanhazdadjoke.com';
@@ -513,6 +542,10 @@ export default function ManageUsers() {
   const [passphrase, setPassphrase] = useState('');
   const [outputText, setOutputText] = useState('');
 
+  
+
+
+
   return (
     <section>
 
@@ -534,6 +567,8 @@ export default function ManageUsers() {
                 placeholder="Search by username, email address, phone number"
                 onSearch={onSearch}
                 className="searching"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
               />
             </div>
             <div className="filter-btn-wrapper">
@@ -599,7 +634,7 @@ export default function ManageUsers() {
 
       <div className="container">
         <div className="table-wrapper ">
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={filteredData} />
           <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
