@@ -358,9 +358,9 @@ export default function Details({ data, incidentId }) {
               </p>
             </div>
 
-            <div className="col-12">
+            {/* <div className="col-12">
               <button className="btn open-data">Open Data</button>
-            </div>
+            </div> */}
           </div>
 
           <div className="col-auto">
