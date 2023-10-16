@@ -37,6 +37,9 @@ export default function AllBanks() {
         current: 1,
     });
     console.log(data)
+    const [searchQuery, setSearchQuery] = useState(''); // Add searchQuery state
+    const [filteredData, setFilteredData] = useState([]); // Add filteredData state
+
 
 
 
@@ -44,7 +47,9 @@ export default function AllBanks() {
         console.log('Success:', values);
     };
 
-    const onSearch = value => console.log(value);
+
+    //Legacy Code base
+    //const onSearch = value => console.log(value);
 
     const onChange = e => {
         console.log(`checked = ${e.target.checked}`);
@@ -67,6 +72,24 @@ export default function AllBanks() {
     };
 
 
+    const onSearch = value => {
+        // Handle search button click or use this value for any specific action.
+        // You can remove the console.log if not needed.
+        console.log('Search query:', value);
+        setSearchQuery(value); // Update searchQuery state with the entered query
+    };
+
+    // ...
+
+    // Function to filter the data based on the search query
+    const filterData = () => {
+        const filtered = data.filter(item => {
+            return item.bank_name.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setFilteredData(filtered);
+    };
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -78,7 +101,9 @@ export default function AllBanks() {
         };
 
         fetchData();
-    }, [token]);
+
+        filterData();
+    }, [token] [searchQuery, data]);
 
 
 
@@ -151,6 +176,7 @@ export default function AllBanks() {
                                 placeholder="Search by name..."
                                 onSearch={onSearch}
                                 className="searching"
+                                onChange={e => setSearchQuery(e.target.value)} // Add this line
                             />
                         </div>
                         <div className="filter-btn-wrapper">
@@ -213,7 +239,7 @@ export default function AllBanks() {
 
             <div className="container">
                 <div className="table-wrapper ">
-                    <Table columns={columns} dataSource={data} pagination={pagination} />
+                    <Table columns={columns} dataSource={filteredData} pagination={pagination} />
                     <div className="our-pagination d-flex justify-content-center">
                         <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                             <p className="det">

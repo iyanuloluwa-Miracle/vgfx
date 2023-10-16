@@ -1,8 +1,3 @@
-import React, { useState } from 'react';
-import ExportAdd from './ExportAdd';
-import AddIcon from './Vectors/AddIcon';
-import { ExportCsv } from '../utility/svg';
-import Link from 'next/link';
 import {
   Button,
   Input,
@@ -14,30 +9,442 @@ import {
   Form,
   Radio,
   DatePicker,
-  Switch,
 } from 'antd';
-import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import React, { useState, useEffect, useContext } from 'react';
+import ExportZone from './ExportZone';
+import {
+  SearchIcon,
+  FilterIcon,
+  DirLeft,
+  DirRight,
+  listIcon,
+} from '../utility/svg';
+import Link from 'next/link';
+import axios from 'axios';
+import NodeRSA from 'node-rsa';
+import CryptoJS from 'crypto-js';
+import { OverlayContext } from './Layout';
+import { CSVLink } from 'react-csv';
 
-export default function Roles() {
+const key = new NodeRSA({ b: 256 });
+
+
+const data = [
+  {
+    key: '1',
+    fullName: 'Atanda Damilare',
+    username: 'dammy',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Sept 17, 2022',
+    report: 45,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link
+          href={'/user-details'}
+          onClick={() => setDefaultUSerTab('1')}
+          passHref
+        >
+          <Button className="view-profile">View profile</Button>
+        </Link>
+
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '2',
+    fullName: 'Jide Ola',
+    username: 'Ola',
+    email: 'jideola@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Jun 12, 2020',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link
+          href={'/user-details'}
+          onClick={() => setDefaultUSerTab('1')}
+          passHref
+        >
+          <Button className="view-profile">View profile</Button>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '3',
+    fullName: 'Specter Omo',
+    username: 'Specter Damilare',
+    email: 'Specter@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 10,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '4',
+    fullName: 'Jesse Finn',
+    username: 'Finn',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Aug 16, 2020',
+    report: 22,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '5',
+    fullName: 'Atanda Damilare',
+    username: 'Ola',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Sept 17, 2022',
+    report: 45,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '6',
+    fullName: 'Jide Ola',
+    username: 'Damilare',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'Jun 12, 2020',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '7',
+    fullName: 'Henry Etta',
+    username: 'Omo',
+    email: 'atandadray@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 10,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '8',
+    fullName: 'Jesse Finn',
+    username: 'Ola',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 22,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '9',
+    fullName: 'Specter Omo',
+    username: 'Finn',
+    email: 'jessefinn@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 42,
+    status: 'Active',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+  {
+    key: '10',
+    fullName: 'Atanda Damilare',
+    username: 'Etta',
+    email: 'henryetta@gmail.com',
+    phone: '+2348123456790',
+    dateRegistered: 'May 8, 2021',
+    report: 2,
+    status: 'Inactive',
+    views: (
+      <div className="view-btn">
+        <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+        </Link>
+        <Link
+          href={'/user-details?defaultpage=2'}
+          onClick={() => setDefaultUSerTab('2')}
+          passHref
+        >
+          <Button className="view-report">View reports</Button>
+        </Link>
+      </div>
+    ),
+  },
+];
+
+export default function ManageUsers() {
+  
+  const { setDefaultUSerTab } = OverlayContext();
+  const [incidentsData, setIncidentsData] = useState([]);
   const { Search } = Input;
-
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalAddPage, setModalAddPage] = useState(false);
-  const [modalEditPage, setModalEditPage] = useState(false);
   const [value, setValue] = useState('all');
 
+  //SearchQuery
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState(data);
+
+  // rsa start
+
+  const [plaintext, setPlaintext] = useState('');
+  const [encrypted, setEncrypted] = useState('');
+  const [decrypted, setDecrypted] = useState('');
+
+  const [key, setKey] = useState('');
+  const [iv, setIv] = useState('');
+
+  const handleEncrypt = () => {
+    // const encryptedData = key.encrypt(plaintext, 'base64');
+    // setEncrypted(encryptedData);
+
+    console.log({ key: key, iv: iv });
+
+    const encrypted = CryptoJS.AES.encrypt(inputText, key, {
+      iv: iv,
+    }).toString();
+    setOutputText(encrypted);
+    console.log(encrypted);
+  };
+
+  // Function to filter the data based on the search query
+  const filterData = () => {
+    const filtered = data.filter(item => {
+      return (
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.username.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  };
+
+
+
+  useEffect(() => {
+    filterData();
+  }, [searchQuery]);
+
+   // Function to handle search input changes
+   const handleSearchInputChange = e => {
+    setSearchQuery(e.target.value);
+  };
+
+
+  
+
+  const handleExportToCSV = () => {
+    const csvData = [
+      ["Full Name", "Username", "Email Address", "Mobile", "Date Registered", "Total Reports", "Status"],
+      ...data.map(item => [
+        item.fullName,
+        item.username,
+        item.email,
+        item.phone,
+        item.dateRegistered,
+        item.report,
+        item.status,
+      ]),
+    ];
+  
+    // Create a data URI for the CSV file
+    const csvDataURI = "data:text/csv;charset=utf-8," + encodeURIComponent(csvData.map(row => row.join(",")).join("\n"));
+  
+    // Create an anchor element and simulate a click to trigger the download
+    const link = document.createElement("a");
+    link.setAttribute("href", csvDataURI);
+    link.setAttribute("download", "user_data.csv");
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+
+
+
+
+  const handleDecrypt = () => {
+    // const decryptedData = key.decrypt(encrypted, 'utf8');
+    // setDecrypted(decryptedData);
+
+    console.log({ key: key, iv: iv });
+    console.log(outputText);
+
+    const decrypted = CryptoJS.AES.decrypt(outputText, key, {
+      iv: iv,
+    }).toString(CryptoJS.enc.Utf8);
+    setOutputText(decrypted);
+    console.log(decrypted);
+  };
+
+  // rsa end
+
   const onSearch = value => console.log(value);
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+  };
 
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
-  };
-
-  const checkChange = checked => {
-    console.log(`switch to ${checked}`);
-  };
-
-  const handleChange = value => {
-    console.log(`selected ${value}`);
   };
 
   const onFinish = values => {
@@ -54,42 +461,54 @@ export default function Roles() {
       title: ' ',
       dataIndex: 'checkbox',
       key: 'checkbox',
-      render: text => <Checkbox onChange={onChange} />,
+      render: text => (
+        <div>
+          <Checkbox onChange={onChange} />
+        </div>
+      ),
     },
     {
-      title: 'Role Name',
-      dataIndex: 'role',
-      key: 'role',
-      render: text => <div className="max-content">{text}</div>,
+      title: 'Full Name',
+      dataIndex: 'fullName',
+      key: 'fullName',
     },
     {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
-      render: text => <span className="max-content">{text}</span>,
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+      render: text => <span className="last-name">{text}</span>,
+    },
+    {
+      title: 'Email Address',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Mobile',
+      dataIndex: 'phone',
+      key: 'phone',
     },
 
     {
-      title: 'Added By',
-      dataIndex: 'addedBy',
-      key: 'addedBy',
-      render: text => <span className="max-content">{text}</span>,
-    },
-
-    {
-      title: 'Last Updated',
-      dataIndex: 'lasteUpdate',
-      key: 'lasteUpdate',
+      title: 'Total Reports',
+      dataIndex: 'report',
+      key: 'report',
+      render: text => <span className="report">{text}</span>,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      render: text => (
+        <div>
+          <span className={`user-status ${text}`}>{text}</span>
+        </div>
+      ),
     },
     {
-      title: 'Date Created',
-      dataIndex: 'lasteUpdate',
-      key: 'lasteUpdate',
+      title: 'Date Registered',
+      dataIndex: 'dateRegistered',
+      key: 'dateRegistered',
     },
     {
       title: ' ',
@@ -98,332 +517,46 @@ export default function Roles() {
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      fullName: 'Atanda Damilare',
-      company: 'Vigilant',
-      addedBy: 'Specter',
-      role: 'Customer support',
-      lasteUpdate: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '2',
-      fullName: 'Jide Ola',
-      company: 'CBN',
-      addedBy: 'Specter',
-      role: 'Consumer protection',
-      lasteUpdate: 'Jun 12, 2020 22:15',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '3',
-      fullName: 'Specter Omo',
-      company: 'NPF',
-      addedBy: 'Specter',
-      role: 'Inspector general',
-      lasteUpdate: 'May 8, 2021 18:30',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
 
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '4',
-      fullName: 'Jesse Finn',
-      company: 'E-tranzact',
-      addedBy: 'Specter',
-      role: 'E-tranzact',
-      lasteUpdate: 'Aug 16, 2020 13:17',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '5',
-      fullName: 'Atanda Damilare',
-      company: 'Vigilant',
-      addedBy: 'Specter',
-      role: 'Customer support',
-      lasteUpdate: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
+  const FetchJoke = async () => {
+    const url = 'https://icanhazdadjoke.com';
 
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '6',
-      fullName: 'Jide Ola',
-      company: 'CBN',
-      addedBy: 'Specter',
-      role: 'Consumer protection',
-      lasteUpdate: 'Jun 12, 2020 22:15',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
+    try {
+      const { data } = await axios(url, {
+        headers: { Accept: 'application/json' },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '7',
-      fullName: 'Henry Etta',
-      company: 'NPF',
-      addedBy: 'Specter',
-      role: 'Inspector general',
-      lasteUpdate: 'May 8, 2021 18:30',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
+  useEffect(() => {
+    FetchJoke();
+    // generateRandomNumber();
+    setKey(CryptoJS.lib.WordArray.random(16));
+    setIv(CryptoJS.lib.WordArray.random(16));
+  }, []);
 
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button className="view-report">Edit</Button>
-        </div>
-      ),
-    },
-    {
-      key: '8',
-      fullName: 'Jesse Finn',
-      company: 'E-tranzact',
-      addedBy: 'Specter',
-      role: 'E-tranzact',
-      lasteUpdate: 'Aug 16, 2020 13:17',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button className="view-report">Edit</Button>
-        </div>
-      ),
-    },
-    {
-      key: '9',
-      fullName: 'Specter Omo',
-      company: 'Vigilant',
-      addedBy: 'Specter',
-      role: 'Customer support',
-      lasteUpdate: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '10',
-      fullName: 'Atanda Damilare',
-      company: 'CBN',
-      addedBy: 'Specter',
-      role: 'Consumer protection',
-      lasteUpdate: 'Jun 12, 2020 22:15',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Link href={'/role-access'} passHref>
-            <Button className="view-profile">Fetch access </Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditPage(true)}
-          >
-            Edit{' '}
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const [inputText, setInputText] = useState('');
+  const [passphrase, setPassphrase] = useState('');
+  const [outputText, setOutputText] = useState('');
+
+  
+
+
 
   return (
-    <section className="page-management">
-      <div className="container">
-        <div className="row _tabs-wrapper">
-          <div className="col-auto">
-            <h4 className="_tabs">Roles</h4>
-          </div>
+    <section>
 
-          <div className="col-auto d-flex gap-4">
-            <Button icon={ExportCsv}>Export CSV</Button>
-            <Button
-              icon={<AddIcon />}
-              style={{ background: '#7D0003', color: '#fff' }}
-              onClick={() => setModalAddPage(true)}
-            >
-              Add Role
-            </Button>
-          </div>
-        </div>
-      </div>
+      <CSVLink data={incidentsData} filename={'exported-data.csv'}>
+        <ExportZone h4="All Users" />
+      </CSVLink>
+
+   
+
+    
+    
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
@@ -431,9 +564,11 @@ export default function Roles() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by name..."
+                placeholder="Search by username, email address, phone number"
                 onSearch={onSearch}
                 className="searching"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
               />
             </div>
             <div className="filter-btn-wrapper">
@@ -467,16 +602,24 @@ export default function Roles() {
                   onChange={handleChange}
                   options={[
                     {
-                      value: '10',
-                      label: '10 per page',
+                      value: '10 per page',
+                      label: '10 ',
+                    },
+                    {
+                      value: '25',
+                      label: '25 ',
+                    },
+                    {
+                      value: '50',
+                      label: '50 ',
                     },
                     {
                       value: '100',
-                      label: '100 per page',
+                      label: '100 ',
                     },
                     {
-                      value: '1000',
-                      label: '1000 per page',
+                      value: '250',
+                      label: '250 ',
                     },
                   ]}
                 />
@@ -490,8 +633,8 @@ export default function Roles() {
       </div>
 
       <div className="container">
-        <div className="table-wrapper  ">
-          <Table columns={columns} dataSource={data} />
+        <div className="table-wrapper ">
+          <Table columns={columns} dataSource={filteredData} />
           <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
@@ -528,59 +671,24 @@ export default function Roles() {
               <Radio value={'inactive'}>Inactive</Radio>
             </Radio.Group>
           </Form.Item>
-
-          <Space direction="" className="flex-wrap">
-            <Form.Item name="Company" label="Company:" className="range-filter">
-              <Select
-                defaultValue="All"
-                style={{
-                  width: 270,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: 'All',
-                    label: 'All',
-                  },
-                  {
-                    value: 'Vigilant',
-                    label: 'Vigilant',
-                  },
-                  {
-                    value: 'CBN',
-                    label: 'CBN',
-                  },
-                  {
-                    value: 'NPF',
-                    label: 'NPF',
-                  },
-                  {
-                    value: 'E-tranzact',
-                    label: 'E-tranzact',
-                  },
-                ]}
-              />
-            </Form.Item>
-          </Space>
-
           <Form.Item
-            name="dateCreated"
-            label="Date created:"
+            name="rangeFilter"
+            label="Date range:"
             className="date-filter"
           >
-            <Space direction="" className="flex-wrap">
+            <Space direction="" className="flex-wrap" style={{ width: '100%' }}>
               <DatePicker
-                onChange={onChange}
+                onChange={() => onChange(e)}
                 placeholder="From"
                 style={{
-                  width: 270,
+                  width: '250px',
                 }}
               />
               <DatePicker
-                onChange={onChange}
+                onChange={() => onChange(e)}
                 placeholder="To"
                 style={{
-                  width: 270,
+                  width: '250px',
                 }}
               />
             </Space>
@@ -588,6 +696,7 @@ export default function Roles() {
 
           <Form.Item className="buttons">
             <Button
+              // type="primary"
               onClick={() => setModalOpen(false)}
               htmlType="submit"
               className="me-3"
@@ -603,70 +712,6 @@ export default function Roles() {
               Clear
             </Button>
           </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* add role modal  */}
-
-      <Modal
-        centered
-        open={modalAddPage}
-        onOk={() => setModalAddPage(false)}
-        onCancel={() => setModalAddPage(false)}
-        className="our-modal add-page-modal"
-        footer={null}
-      >
-        <div className="headings text-center">
-          <h4>Add Role</h4>
-          <p>Fill the fields below to add a new role.</p>
-        </div>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="roleName" label="Role Name" className="heights">
-            <Input placeholder="Enter role name" />
-          </Form.Item>
-          <Form.Item name="Company" label="Company" className="heights">
-            <Input placeholder="Company" />
-          </Form.Item>
-
-          <Button
-            htmlType="submit"
-            style={{ background: '#7D0003', color: '#FFF' }}
-            className="w-100 mt-4"
-          >
-            Add Role
-          </Button>
-        </Form>
-      </Modal>
-
-      {/* edit Role modal  */}
-
-      <Modal
-        centered
-        open={modalEditPage}
-        onOk={() => setModalEditPage(false)}
-        onCancel={() => setModalEditPage(false)}
-        className="our-modal add-page-modal"
-        footer={null}
-      >
-        <div className="headings text-center">
-          <h4>Edit Role</h4>
-          <p>Fill the fields below to edit the role.</p>
-        </div>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="roleName" label="Role Name" className="heights">
-            <Input placeholder="Enter role name" />
-          </Form.Item>
-          <Form.Item name="Company" label="Company" className="heights">
-            <Input placeholder="Company" />
-          </Form.Item>
-
-          <Button
-            htmlType="submit"
-            style={{ background: '#7D0003', color: '#FFF' }}
-            className="w-100 mt-4"
-          >
-            Edit Roles
-          </Button>
         </Form>
       </Modal>
     </section>
