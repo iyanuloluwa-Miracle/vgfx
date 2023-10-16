@@ -534,7 +534,7 @@ export default function Partners() {
                 style={{ color: 'white' }}
               />
             ) : (
-              <>Add Bank</>
+              <>Add Partner</>
             )}
           </Button>
         </Form>

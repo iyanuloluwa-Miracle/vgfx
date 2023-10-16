@@ -572,9 +572,9 @@ export default function ManageUsers() {
               />
             </div>
             <div className="filter-btn-wrapper">
-              <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
+              {/* <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">

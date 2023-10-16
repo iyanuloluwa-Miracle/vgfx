@@ -571,11 +571,11 @@ export default function ManageUsers() {
                 onChange={handleSearchInputChange}
               />
             </div>
-            <div className="filter-btn-wrapper">
+            {/* <div className="filter-btn-wrapper">
               <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
               </Button>
-            </div>
+            </div> */}
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
