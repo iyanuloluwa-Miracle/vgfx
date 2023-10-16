@@ -324,10 +324,10 @@ export default function UsersReport() {
           <div className="notes">
             <h6>Notes</h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              The transaction was seamlessly executed without any discrepancies or issues, guaranteeing the security of the account and 
+              adherence to banking standards. We are committed to maintaining the highest level of integrity and security in all financial transactions, 
+              and this successful processing is a testament to our dedication to providing reliable banking services.
+              
             </p>
           </div>
         </div>

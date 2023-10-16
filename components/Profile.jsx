@@ -116,7 +116,7 @@ export default function Profile({ activeStatus }) {
             style={{ maxWidth: '100%' }}
           />
         </div>
-        <p>Are you sure you want to activate this user?</p>
+        <p>Are you sure you want to deactivate this user?</p>
 
         <div className="buttons">
           <Button
@@ -124,7 +124,7 @@ export default function Profile({ activeStatus }) {
             onClick={() => confirmactivate()}
             style={{ border: 'none' }}
           >
-            Activate
+            Deactivate
           </Button>
           <Button onClick={() => setModalOpen(false)}>Cancel</Button>
         </div>
@@ -267,12 +267,12 @@ export default function Profile({ activeStatus }) {
           ) : (
             <Button
               style={{
-                background: 'rgba(0, 150, 0, 0.1)',
+                background: 'rgba(255, 0, 0, 0.1)',
                 border: 'none',
               }}
               onClick={() => activate()}
             >
-              Activate
+              Deactivate
             </Button>
           )}
         </div>
