@@ -174,7 +174,7 @@ export default function UsersReport() {
             <h4 className="our-h4">All Reports - 4</h4>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
-            <div className="filter-btn-wrapper">
+            {/* <div className="filter-btn-wrapper">
               <Button
                 icon={FilterIcon}
                 onClick={() => setModalOpen(true)}
@@ -182,7 +182,7 @@ export default function UsersReport() {
               >
                 Filter by:
               </Button>
-            </div>
+            </div> */}
 
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">

@@ -43,9 +43,9 @@ export default function UserDevice() {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <Button className="our-btn">Untie Device</Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
