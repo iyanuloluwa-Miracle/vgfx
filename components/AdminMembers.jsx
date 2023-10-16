@@ -46,6 +46,8 @@ export default function AdminMembers() {
     pageSize: 100,
     current: 1,
   });
+  const [searchQuery, setSearchQuery] = useState("");
+
 
 
 
@@ -75,7 +77,7 @@ export default function AdminMembers() {
     console.log('Success:', values);
   };
 
-  const onSearch = value => console.log(value);
+  //const onSearch = value => console.log(value);
   const handleChange = value => {
     console.log(`selected ${value}`);
     if (value === 'all') {
@@ -95,6 +97,13 @@ export default function AdminMembers() {
     setValue(e.target.value);
   };
 
+
+
+
+  const onSearch = (value) => {
+    setSearchQuery(value);
+  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -275,6 +284,17 @@ export default function AdminMembers() {
   };
 
 
+
+  const fetchData = async () => {
+    try {
+      const bankData = await fetchAllAdminUsers(token, searchQuery);
+      setData2(bankData.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
+
   const combinedData = data2.map((item, index) => {
     return {
       ...item,
@@ -389,7 +409,18 @@ export default function AdminMembers() {
 
       <div className="container">
         <div className="table-wrapper">
-          <Table columns={columns} dataSource={combinedData} pagination={pagination} onRow={rowProps} className='cursor-pointer' />
+        <Table
+            columns={columns}
+            dataSource={combinedData.filter((item) => {
+              // Filter based on searchQuery
+              const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
+              return fullName.includes(searchQuery.toLowerCase());
+            })}
+            pagination={pagination}
+            onRow={rowProps}
+            className="cursor-pointer"
+          />
+          
           <div className="our-pagination d-flex justify-content-center">
             {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">

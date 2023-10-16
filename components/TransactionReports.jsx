@@ -42,11 +42,36 @@ export default function TransactionReports() {
   const [showButton, setShowButton] = useState(false);
   const [incidentsData, setIncidentsData] = useState([]);
   const [paginatedIncidentsData, setPaginatedIncidentsData] = useState([]);
-  const [search_query, setSearchQuery] = useState(null);
+  //const [search_query, setSearchQuery] = useState(null);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredIncidentsData, setFilteredIncidentsData] = useState([]);
+
   const [modalOpen, setModalOpen] = useState(false);
   const { user } = OverlayContext();
   const idString = user?.role.role_statuses.map(status => status.id).join(',')
 
+  
+  const handleSearchInputChange = e => {
+    setSearchQuery(e.target.value);
+  };
+
+
+
+  const filterData = () => {
+    const filteredData = incidentsData.filter(item => {
+      return (
+        item.incidents.toString().includes(searchQuery) ||
+        item.incidentID.toString().includes(searchQuery) ||
+        item.reportedby.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.transactionReference.toString().includes(searchQuery) ||
+        item.status.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredIncidentsData(filteredData);
+  };
+  
+  
 
 
   const [filterForm] = Form.useForm();
@@ -148,7 +173,7 @@ export default function TransactionReports() {
   }
 
   const { data: fetchIncidents, isLoading: loadingIncidents } = useQuery({
-    queryKey: ['get_incidents', search_query],
+    queryKey: ['get_incidents'],
     queryFn: () => {
       return user?.entity_id === 3
         ? api.fetchAllIncidents(null, { search_query })
@@ -204,6 +229,9 @@ export default function TransactionReports() {
       current,
       pageSize,
     });
+
+    filterData(); // Apply filtering based on search query
+
   };
 
 
@@ -223,6 +251,8 @@ export default function TransactionReports() {
                 placeholder="Search by Username, tracking ID, reference..."
                 // onSearch={onSearch}
                 className="searching"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
               />
             </div>
             {/* <div className="filter-btn-wrapper">
@@ -259,10 +289,11 @@ export default function TransactionReports() {
           ) : (
             <Table
               columns={columns}
-              dataSource={paginatedIncidentsData}
               onRow={rowProps}
               pagination={pagination} // Add the pagination configuration here
               onChange={handleTableChange} // Handle pagination changes
+              dataSource={searchQuery ? filteredIncidentsData : paginatedIncidentsData}
+
             />
           )}
 
