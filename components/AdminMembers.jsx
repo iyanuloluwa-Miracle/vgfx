@@ -29,9 +29,11 @@ import { OverlayContext } from './Layout';
 export default function AdminMembers() {
   const { user } = OverlayContext();
   const { Search } = Input;
+  //token
   const token = Cookies.get('token');
   const router = useRouter();
 
+  const [modalAddPage, setModalAddPage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [modalAddMember, setModalAddMember] = useState(false);
@@ -46,8 +48,6 @@ export default function AdminMembers() {
     pageSize: 100,
     current: 1,
   });
-  const [searchQuery, setSearchQuery] = useState("");
-
 
 
 
@@ -60,7 +60,7 @@ export default function AdminMembers() {
 
 
 
-  
+
 
 
 
@@ -77,7 +77,7 @@ export default function AdminMembers() {
     console.log('Success:', values);
   };
 
-  //const onSearch = value => console.log(value);
+  const onSearch = value => console.log(value);
   const handleChange = value => {
     console.log(`selected ${value}`);
     if (value === 'all') {
@@ -97,13 +97,6 @@ export default function AdminMembers() {
     setValue(e.target.value);
   };
 
-
-
-
-  const onSearch = (value) => {
-    setSearchQuery(value);
-  };
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -284,17 +277,6 @@ export default function AdminMembers() {
   };
 
 
-
-  const fetchData = async () => {
-    try {
-      const bankData = await fetchAllAdminUsers(token, searchQuery);
-      setData2(bankData.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  
-
   const combinedData = data2.map((item, index) => {
     return {
       ...item,
@@ -327,7 +309,13 @@ export default function AdminMembers() {
               Manage Roles
             </Button>
 
-
+            <Button
+              icon={<AddIcon />}
+              style={{ background: '#7D0003', color: '#fff' }}
+              onClick={() => setModalAddPage(true)}
+            >
+              Add Users
+            </Button>
             {
               user?.role_id === 11 || user?.role_id === 13 ? (<Button
                 icon={<AddIcon />}
@@ -337,6 +325,11 @@ export default function AdminMembers() {
                 Add Users
               </Button>) : (null)
             }
+
+
+
+
+
 
 
           </div>
@@ -354,11 +347,11 @@ export default function AdminMembers() {
                 className="searching"
               />
             </div>
-            {/* <div className="filter-btn-wrapper">
+            <div className="filter-btn-wrapper">
               <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
               </Button>
-            </div> */}
+            </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
@@ -409,18 +402,7 @@ export default function AdminMembers() {
 
       <div className="container">
         <div className="table-wrapper">
-        <Table
-            columns={columns}
-            dataSource={combinedData.filter((item) => {
-              // Filter based on searchQuery
-              const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
-              return fullName.includes(searchQuery.toLowerCase());
-            })}
-            pagination={pagination}
-            onRow={rowProps}
-            className="cursor-pointer"
-          />
-          
+          <Table columns={columns} dataSource={combinedData} pagination={pagination} onRow={rowProps} className='cursor-pointer' />
           <div className="our-pagination d-flex justify-content-center">
             {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
@@ -822,6 +804,46 @@ export default function AdminMembers() {
           </Button>
         </Form>
       </Modal>
+
+
+      {/* add User modal  */}
+
+      <Modal
+        centered
+        open={modalAddPage}
+        onOk={() => setModalAddPage(false)}
+        onCancel={() => setModalAddPage(false)}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Add New users</h4>
+          <p>Fill the fields below to add a new users.</p>
+        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="First Name" label="First Name" className="heights">
+            <Input placeholder="Enter First Name" />
+          </Form.Item>
+          <Form.Item name="Last Name" label="Last Name" className="heights">
+            <Input placeholder="Last Name" />
+          </Form.Item>
+          <Form.Item name="Phone" label="Phone" className="heights">
+            <Input placeholder="Phone" />
+          </Form.Item>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 mt-4"
+          >
+            Add User
+          </Button>
+        </Form>
+      </Modal>
+
+
+
+
     </section>
   );
 }
