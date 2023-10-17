@@ -356,10 +356,10 @@ export default function AdminMembers() {
                 <span className="our-color">1000</span>
               </p>
               <div className="dir">
-                <a href="">
+                <a href="#">
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href="">
+                <a href="#">
                   <span className="">{DirRight}</span>
                 </a>
               </div>

@@ -332,7 +332,7 @@ export default function Partners() {
           <div className="col-auto">
             <h4 className="_tabs">Partners </h4>
           </div>
-          <div className="col-auto d-flex gap-4">
+          {/* <div className="col-auto d-flex gap-4">
             <Button
               icon={<AddIcon />}
               style={{ background: '#7D0003', color: '#fff', width: 'auto' }}
@@ -340,7 +340,7 @@ export default function Partners() {
             >
               Add new partner
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -478,7 +478,7 @@ export default function Partners() {
 
       {/* add partners  */}
 
-      <Modal
+      {/* <Modal
         centered
         open={modalAddPartner}
         onOk={() => setModalAddPartner(false)}
@@ -538,11 +538,11 @@ export default function Partners() {
             )}
           </Button>
         </Form>
-      </Modal>
+      </Modal> */}
 
       {/* edit partners  */}
 
-      <Modal
+      {/* <Modal
         centered
         open={modalEditPartners}
         onOk={() => setModalEditPartners(false)}
@@ -603,7 +603,7 @@ export default function Partners() {
             )}
           </Button>
         </Form>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
