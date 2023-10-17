@@ -343,7 +343,55 @@ export default function ManageUsers() {
   //SearchQuery
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slicedData = data.slice(startIndex, endIndex);
+
+    const filtered = slicedData.filter((item) => {
+      return (
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.username.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+
+    setFilteredData(filtered);
+  }, [currentPage, searchQuery]);
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   // rsa start
 
   const [plaintext, setPlaintext] = useState('');
@@ -568,7 +616,7 @@ export default function ManageUsers() {
                 onSearch={onSearch}
                 className="searching"
                 value={searchQuery}
-                onChange={handleSearchInputChange}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             {/* <div className="filter-btn-wrapper">
@@ -580,14 +628,14 @@ export default function ManageUsers() {
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page <span className="our-color">{currentPage}</span> of{' '}
+                <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
               </p>
               <div className="dir">
-                <a href="">
+                <a href=""onClick={goToPreviousPage}>
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href="">
+                <a href=""onClick={goToNextPage}>
                   <span className="">{DirRight}</span>
                 </a>
               </div>
@@ -599,7 +647,7 @@ export default function ManageUsers() {
                   style={{
                     width: 120,
                   }}
-                  onChange={handleChange}
+                 
                   options={[
                     {
                       value: '10 per page',
@@ -634,8 +682,8 @@ export default function ManageUsers() {
 
       <div className="container">
         <div className="table-wrapper ">
-          <Table columns={columns} dataSource={filteredData} />
-          <div className="our-pagination d-flex justify-content-center">
+          <Table columns={columns} dataSource={filteredData} pagination={false} />
+          {/* <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
                 Page <span className="our-color">2</span> of{' '}
@@ -650,7 +698,7 @@ export default function ManageUsers() {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
