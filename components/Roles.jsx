@@ -32,8 +32,8 @@ const key = new NodeRSA({ b: 256 });
 const data = [
   {
     key: '1',
-    fullName: 'Atanda Damilare',
-    username: 'dammy',
+    fullName: 'Iyanuloluwa Dina',
+    username: 'iyanex',
     email: 'atandadray@gmail.com',
     phone: '+2348123456790',
     dateRegistered: 'Sept 17, 2022',
@@ -542,6 +542,50 @@ export default function ManageUsers() {
   const [passphrase, setPassphrase] = useState('');
   const [outputText, setOutputText] = useState('');
 
+
+
+
+
+
+
+
+
+
+  //SearchQuery
+ 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slicedData = data.slice(startIndex, endIndex);
+
+    const filtered = slicedData.filter((item) => {
+      return (
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.username.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+
+    setFilteredData(filtered);
+  }, [currentPage, searchQuery]);
+
+
+
   
 
 
@@ -580,14 +624,14 @@ export default function ManageUsers() {
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page <span className="our-color">{currentPage}</span> of{' '}
+                <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
               </p>
               <div className="dir">
-                <a href="">
+                <a href="#" onClick={goToPreviousPage}>
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href="">
+                <a href="#" onClick={goToNextPage}>
                   <span className="">{DirRight}</span>
                 </a>
               </div>
@@ -638,14 +682,14 @@ export default function ManageUsers() {
           <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page <span className="our-color">{currentPage}</span> of{' '}
+                <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
               </p>
               <div className="dir">
-                <a href="">
+                <a href="#"onClick={goToPreviousPage}>
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href="">
+                <a href="#" onClick={goToNextPage}>
                   <span className="">{DirRight}</span>
                 </a>
               </div>

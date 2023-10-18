@@ -38,8 +38,41 @@ export default function AllBanks() {
     });
     console.log(data)
     const [searchQuery, setSearchQuery] = useState(''); // Add searchQuery state
-    const [filteredData, setFilteredData] = useState([]); // Add filteredData state
+    const [filteredData, setFilteredData] = useState(data); // Add filteredData state
 
+
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slicedData = data.slice(startIndex, endIndex);
+
+    const filtered = slicedData.filter((item) => {
+        return (
+          (typeof item.email === 'string' && item.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (typeof item.username === 'string' && item.username.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+      });
+
+    setFilteredData(filtered);
+  }, [currentPage, searchQuery]);
 
 
 
@@ -103,7 +136,7 @@ export default function AllBanks() {
         fetchData();
 
         filterData();
-    }, [token] [searchQuery, data]);
+    }, [token, searchQuery, data]);
 
 
 
@@ -188,14 +221,14 @@ export default function AllBanks() {
                     <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
                         <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                             <p className="det">
-                                Page <span className="our-color">2</span> of{' '}
-                                <span className="our-color">1000</span>
+                                Page <span className="our-color">{currentPage}</span> of{' '}
+                                <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
                             </p>
                             <div className="dir">
-                                <a href="">
+                                <a href=""onClick={goToPreviousPage}>
                                     <span className="">{DirLeft}</span>
                                 </a>
-                                <a href="">
+                                <a href="" onClick={goToNextPage}>
                                     <span className="">{DirRight}</span>
                                 </a>
                             </div>
@@ -243,14 +276,14 @@ export default function AllBanks() {
                     <div className="our-pagination d-flex justify-content-center">
                         <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                             <p className="det">
-                                Page <span className="our-color">2</span> of{' '}
-                                <span className="our-color">1000</span>
+                                Page <span className="our-color">{currentPage}</span> of{' '}
+                                <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
                             </p>
                             <div className="dir">
-                                <a href="">
+                                <a href="#"onClick={goToPreviousPage}>
                                     <span className="">{DirLeft}</span>
                                 </a>
-                                <a href="">
+                                <a href="#"onClick={goToNextPage}>
                                     <span className="">{DirRight}</span>
                                 </a>
                             </div>

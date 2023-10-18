@@ -32,8 +32,8 @@ const key = new NodeRSA({ b: 256 });
 const data = [
   {
     key: '1',
-    fullName: 'Atanda Damilare',
-    username: 'dammy',
+    fullName: 'Iyanuloluwa Dina',
+    username: 'iyanex',
     email: 'atandadray@gmail.com',
     phone: '+2348123456790',
     dateRegistered: 'Sept 17, 2022',
