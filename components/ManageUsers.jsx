@@ -632,10 +632,10 @@ export default function ManageUsers() {
                 <span className="our-color">{Math.ceil(data.length / itemsPerPage)}</span>
               </p>
               <div className="dir">
-                <a href=""onClick={goToPreviousPage}>
+                <a href="#"onClick={goToPreviousPage}>
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href=""onClick={goToNextPage}>
+                <a href="#"onClick={goToNextPage}>
                   <span className="">{DirRight}</span>
                 </a>
               </div>

@@ -58,6 +58,28 @@ export default function AdminMembers() {
   const rolesArray3 = rolesArray.map(item => item.role_statuses)
   const rolesArray4 = rolesArray3.map(item => item.created_at)
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(100); // You can set your initial page size
+
+  const pageSizeOptions = ['10', '100', '1000']; // Define the available page sizes
+
+
+  // Define handlePrevPage and handleNextPage functions here
+const handlePrevPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  const totalPages = Math.ceil(combinedData.length / pageSize);
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
+
+
+
 
 
 
@@ -300,38 +322,31 @@ export default function AdminMembers() {
             <Button
               icon={<SettingsVector2 color="#7D0003" />}
               style={{
-                color: '#7D0003',
-                background: '#fff',
-                border: '1px solid #7D0003',
+                color: "#7D0003",
+                background: "#fff",
+                border: "1px solid #7D0003",
               }}
-            // onClick={() => openModal()}
+              // onClick={() => openModal()}
             >
               Manage Roles
             </Button>
 
             <Button
               icon={<AddIcon />}
-              style={{ background: '#7D0003', color: '#fff' }}
+              style={{ background: "#7D0003", color: "#fff" }}
               onClick={() => setModalAddPage(true)}
             >
               Add Users
             </Button>
-            {
-              user?.role_id === 11 || user?.role_id === 13 ? (<Button
+            {user?.role_id === 11 || user?.role_id === 13 ? (
+              <Button
                 icon={<AddIcon />}
-                style={{ background: '#7D0003', color: '#fff' }}
+                style={{ background: "#7D0003", color: "#fff" }}
                 onClick={() => setModalAddMember(true)}
               >
                 Add Users
-              </Button>) : (null)
-            }
-
-
-
-
-
-
-
+              </Button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -347,19 +362,20 @@ export default function AdminMembers() {
                 className="searching"
               />
             </div>
-           
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page <span className="our-color">{currentPage}</span> of{" "}
+                <span className="our-color">
+                  {Math.ceil(combinedData.length / pageSize)}
+                </span>
               </p>
               <div className="dir">
-                <a href="#">
+                <a href="#" onClick={handlePrevPage}>
                   <span className="">{DirLeft}</span>
                 </a>
-                <a href="#">
+                <a href="#" onClick={handleNextPage}>
                   <span className="">{DirRight}</span>
                 </a>
               </div>
@@ -374,16 +390,16 @@ export default function AdminMembers() {
                   onChange={handleChange}
                   options={[
                     {
-                      value: '10',
-                      label: '10 per page',
+                      value: "10",
+                      label: "10 per page",
                     },
                     {
-                      value: '100',
-                      label: '100 per page',
+                      value: "100",
+                      label: "100 per page",
                     },
                     {
-                      value: '1000',
-                      label: '1000 per page',
+                      value: "1000",
+                      label: "1000 per page",
                     },
                   ]}
                 />
@@ -398,7 +414,27 @@ export default function AdminMembers() {
 
       <div className="container">
         <div className="table-wrapper">
-          <Table columns={columns} dataSource={combinedData} pagination={pagination} onRow={rowProps} className='cursor-pointer' />
+          <Table
+           columns={columns}
+           dataSource={combinedData.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
+           pagination={{
+             current: currentPage,
+             pageSize: pageSize,
+             pageSizeOptions: pageSizeOptions,
+             total: combinedData.length,
+             showSizeChanger: true,
+             onShowSizeChange: (current, size) => {
+               setPageSize(size);
+               setCurrentPage(1); // Reset to the first page when changing page size
+             },
+             onChange: (page) => {
+               setCurrentPage(page);
+             },
+           }}
+           onRow={rowProps}
+           className="cursor-pointer"
+            
+          />
           <div className="our-pagination d-flex justify-content-center">
             {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
@@ -432,9 +468,9 @@ export default function AdminMembers() {
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="status" label="Status:">
             <Radio.Group onChange={onChangeCheck} value={value}>
-              <Radio value={'all'}>All</Radio>
-              <Radio value={'active'}>Active</Radio>
-              <Radio value={'inactive'}>Inactive</Radio>
+              <Radio value={"all"}>All</Radio>
+              <Radio value={"active"}>Active</Radio>
+              <Radio value={"inactive"}>Inactive</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -444,29 +480,29 @@ export default function AdminMembers() {
                 defaultValue="All"
                 style={{
                   width: 250,
-                  maxWidth: '100%',
+                  maxWidth: "100%",
                 }}
                 onChange={handleChange}
                 options={[
                   {
-                    value: 'All',
-                    label: 'All',
+                    value: "All",
+                    label: "All",
                   },
                   {
-                    value: 'Vigilant',
-                    label: 'Vigilant',
+                    value: "Vigilant",
+                    label: "Vigilant",
                   },
                   {
-                    value: 'CBN',
-                    label: 'CBN',
+                    value: "CBN",
+                    label: "CBN",
                   },
                   {
-                    value: 'NPF',
-                    label: 'NPF',
+                    value: "NPF",
+                    label: "NPF",
                   },
                   {
-                    value: 'E-tranzact',
-                    label: 'E-tranzact',
+                    value: "E-tranzact",
+                    label: "E-tranzact",
                   },
                 ]}
               />
@@ -481,29 +517,29 @@ export default function AdminMembers() {
                 defaultValue="All"
                 style={{
                   width: 250,
-                  maxWidth: '100%',
+                  maxWidth: "100%",
                 }}
                 onChange={handleChange}
                 options={[
                   {
-                    value: 'All',
-                    label: 'All',
+                    value: "All",
+                    label: "All",
                   },
                   {
-                    value: 'Customer support',
-                    label: 'Customer support',
+                    value: "Customer support",
+                    label: "Customer support",
                   },
                   {
-                    value: 'Consumer protection',
-                    label: 'Consumer protection',
+                    value: "Consumer protection",
+                    label: "Consumer protection",
                   },
                   {
-                    value: 'Inspector general',
-                    label: 'Inspector general',
+                    value: "Inspector general",
+                    label: "Inspector general",
                   },
                   {
-                    value: 'E-tranzact',
-                    label: 'E-tranzact',
+                    value: "E-tranzact",
+                    label: "E-tranzact",
                   },
                 ]}
               />
@@ -521,7 +557,7 @@ export default function AdminMembers() {
                 placeholder="From"
                 style={{
                   width: 250,
-                  maxWidth: '100%',
+                  maxWidth: "100%",
                 }}
               />
               <DatePicker
@@ -529,7 +565,7 @@ export default function AdminMembers() {
                 placeholder="To"
                 style={{
                   width: 250,
-                  maxWidth: '100%',
+                  maxWidth: "100%",
                 }}
               />
             </Space>
@@ -540,14 +576,14 @@ export default function AdminMembers() {
               onClick={() => setModalOpen(false)}
               htmlType="submit"
               className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
+              style={{ background: "#7D0003", color: "#fff" }}
             >
               Apply
             </Button>
             <Button
               type="primary"
               onClick={() => setModalOpen(false)}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
+              style={{ background: "#FFF", color: "#1C1C1C" }}
             >
               Clear
             </Button>
@@ -572,44 +608,65 @@ export default function AdminMembers() {
         <Form layout="vertical" onFinish={AddAdminUser}>
           <div className="d-flex align-items-center justify-content-center gap-3">
             <Form.Item name="first_name" label="First Name" className="heights">
-              <Input placeholder="Enter full name" value={firstName} onChange={handleFirstName} />
+              <Input
+                placeholder="Enter full name"
+                value={firstName}
+                onChange={handleFirstName}
+              />
             </Form.Item>
 
             <Form.Item name="last_name" label="Last Name" className="heights">
-              <Input placeholder="Enter full name" value={lastName} onChange={handleLastName} />
+              <Input
+                placeholder="Enter full name"
+                value={lastName}
+                onChange={handleLastName}
+              />
             </Form.Item>
           </div>
 
-          <Form.Item name="phone_number" label="Personal Phone Number" className="heights">
-            <Input placeholder="Enter Personal Phone Number" value={phoneNumber} onChange={setPhoneNumber} />
+          <Form.Item
+            name="phone_number"
+            label="Personal Phone Number"
+            className="heights"
+          >
+            <Input
+              placeholder="Enter Personal Phone Number"
+              value={phoneNumber}
+              onChange={setPhoneNumber}
+            />
           </Form.Item>
 
           <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email" type="email" value={email} onChange={setEmail} />
+            <Input
+              placeholder="Enter email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+            />
           </Form.Item>
 
           <Form.Item name="entity_id" label="Entity">
             <Select
               style={{
-                width: '100%',
+                width: "100%",
               }}
               onChange={handleChange}
               options={[
                 {
                   value: 1,
-                  label: 'CBN',
+                  label: "CBN",
                 },
                 {
                   value: 2,
-                  label: 'NPF',
+                  label: "NPF",
                 },
                 {
                   value: 3,
-                  label: 'VIGILANT',
+                  label: "VIGILANT",
                 },
                 {
                   value: 4,
-                  label: 'BANK',
+                  label: "BANK",
                 },
               ]}
             />
@@ -621,47 +678,47 @@ export default function AdminMembers() {
               options={[
                 {
                   value: 1,
-                  label: 'CBN',
+                  label: "CBN",
                 },
                 {
                   value: 2,
-                  label: 'Vigilant Customer Service',
+                  label: "Vigilant Customer Service",
                 },
                 {
                   value: 3,
-                  label: 'NPF investigator',
+                  label: "NPF investigator",
                 },
                 {
                   value: 4,
-                  label: 'Bank Fraud Desk',
+                  label: "Bank Fraud Desk",
                 },
                 {
                   value: 5,
-                  label: 'Bank Treasury',
+                  label: "Bank Treasury",
                 },
                 {
                   value: 6,
-                  label: 'Bank Internal Control',
+                  label: "Bank Internal Control",
                 },
                 {
                   value: 7,
-                  label: 'Bank Risk',
+                  label: "Bank Risk",
                 },
                 {
                   value: 8,
-                  label: 'Bank Account',
+                  label: "Bank Account",
                 },
                 {
                   value: 9,
-                  label: 'Bank Internal Audit',
+                  label: "Bank Internal Audit",
                 },
                 {
                   value: 10,
-                  label: 'NPF prosecutor',
+                  label: "NPF prosecutor",
                 },
                 {
                   value: 10,
-                  label: 'Bank Internal Control',
+                  label: "Bank Internal Control",
                 },
               ]}
             />
@@ -670,11 +727,11 @@ export default function AdminMembers() {
           <div className="pt-lg-5 pt-4">
             <Button
               htmlType="submit"
-              style={{ background: '#7D0003', color: '#FFF' }}
+              style={{ background: "#7D0003", color: "#FFF" }}
               className={
                 sunmitLoading
-                  ? 'our-btn-fade w-100 mt-4 mb-4'
-                  : 'w-100 mt-4 mb-4'
+                  ? "our-btn-fade w-100 mt-4 mb-4"
+                  : "w-100 mt-4 mb-4"
               }
               // loading={sunmitLoading}
               disabled={sunmitLoading}
@@ -682,7 +739,7 @@ export default function AdminMembers() {
               {sunmitLoading ? (
                 <Spin
                   className="white-spinner d-flex align-items-center justify-content-center"
-                  style={{ color: 'white' }}
+                  style={{ color: "white" }}
                 />
               ) : (
                 <> Add Member</>
@@ -734,29 +791,29 @@ export default function AdminMembers() {
             <Select
               defaultValue="All"
               style={{
-                width: '100%',
+                width: "100%",
               }}
               onChange={handleChange}
               options={[
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: "All",
+                  label: "All",
                 },
                 {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
+                  value: "Vigilant",
+                  label: "Vigilant",
                 },
                 {
-                  value: 'CBN',
-                  label: 'CBN',
+                  value: "CBN",
+                  label: "CBN",
                 },
                 {
-                  value: 'NPF',
-                  label: 'NPF',
+                  value: "NPF",
+                  label: "NPF",
                 },
                 {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
+                  value: "E-tranzact",
+                  label: "E-tranzact",
                 },
               ]}
             />
@@ -768,24 +825,24 @@ export default function AdminMembers() {
               onChange={handleChange}
               options={[
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: "All",
+                  label: "All",
                 },
                 {
-                  value: 'Customer support',
-                  label: 'Customer support',
+                  value: "Customer support",
+                  label: "Customer support",
                 },
                 {
-                  value: 'Consumer protection',
-                  label: 'Consumer protection',
+                  value: "Consumer protection",
+                  label: "Consumer protection",
                 },
                 {
-                  value: 'Inspector general',
-                  label: 'Inspector general',
+                  value: "Inspector general",
+                  label: "Inspector general",
                 },
                 {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
+                  value: "E-tranzact",
+                  label: "E-tranzact",
                 },
               ]}
             />
@@ -793,14 +850,13 @@ export default function AdminMembers() {
 
           <Button
             htmlType="submit"
-            style={{ background: '#7D0003', color: '#FFF' }}
+            style={{ background: "#7D0003", color: "#FFF" }}
             className="w-100 mt-4 mb-4"
           >
             Submit
           </Button>
         </Form>
       </Modal>
-
 
       {/* add User modal  */}
 
@@ -829,17 +885,13 @@ export default function AdminMembers() {
 
           <Button
             htmlType="submit"
-            style={{ background: '#7D0003', color: '#FFF' }}
+            style={{ background: "#7D0003", color: "#FFF" }}
             className="w-100 mt-4"
           >
             Add User
           </Button>
         </Form>
       </Modal>
-
-
-
-
     </section>
   );
 }
