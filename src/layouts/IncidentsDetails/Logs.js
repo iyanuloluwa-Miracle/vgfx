@@ -1,58 +1,63 @@
 import React from 'react';
 import { LogsWrapper } from './styles';
+import { DateTime } from 'luxon';
 
-const logData = [
+const logsData = [
   {
     id: 1,
-    time: '9:00am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 2,
-    time: '9:10am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 3,
-    time: '9:20am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 4,
-    time: '9:30am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 5,
-    time: '9:40am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 6,
-    time: '9:50am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 7,
-    time: '9:55am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
   {
     id: 8,
-    time: '10:05am',
-    CommentBy: 'user ID',
-    activity: 'assign incident to NPF',
+    time: '2023-10-19T09:00:00.000Z', // Adjust the time to be in UTC format
+    commentBy: 'User ID',
+    activity: 'Assigned incident to NPF',
   },
+  
+  
 ];
 
 export default function Logs() {
+  const timeZone = 'Africa/Lagos'; // Define the desired time zone
+
   return (
     <LogsWrapper>
       <div className="contain">
@@ -62,19 +67,22 @@ export default function Logs() {
           </div>
 
           <div className="col">
-            <h5 className="">incident Logs</h5>
+            <h5>Incident Logs</h5>
           </div>
         </div>
 
-        {logData?.map((el, index) => (
-          <div className="logged-item" key={index}>
+        {logsData.map((logEntry) => (
+          <div className="logged-item" key={logEntry.id}>
             <div className="col-5">
-              <p className="time">9:00am</p>
+              
+              <p className="time">
+                {DateTime.fromISO(logEntry.time, { zone: timeZone }).toLocaleString(DateTime.TIME_WITH_SECONDS)}
+              </p>
             </div>
 
             <div className="col">
               <p>
-                <span className="user-id">@user ID</span> assign incident to NPF
+                <span className="user-id">@{logEntry.commentBy}</span> {logEntry.activity}
               </p>
             </div>
           </div>
