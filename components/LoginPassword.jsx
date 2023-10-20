@@ -47,7 +47,7 @@ export default function LoginPassword() {
   const [loading, setLoading] = useState(false);
   const [message, setmessage] = useState('')
   const [csrfToken, setCsrfToken] = useState('');
-  const { setUserData, useData, setUser, setProgressIndicator } =
+  const { setUserData, useData, setUser, setProgressIndicator, user} =
     OverlayContext();
 
   const loginAccount = useMutation({
@@ -205,6 +205,8 @@ export default function LoginPassword() {
                 )}
               </Button>
             </Form.Item>
+
+            
           </Form>
         </div>
       </div>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Breadcrumb } from 'antd';
-import { HomeNav } from '../utility/svg';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import { Breadcrumb } from "antd";
+import { HomeNav } from "../utility/svg";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { OverlayContext } from "./Layout";
 
 export default function BreadCrumb({ tab, location }) {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function BreadCrumb({ tab, location }) {
   function MouseOut() {
     setBackdrop(false);
   }
+  const { user } = OverlayContext();
 
   return (
     <>
@@ -27,14 +29,14 @@ export default function BreadCrumb({ tab, location }) {
             <ul className="navbar-nav flex-row col">
               <li
                 className={
-                  tab == 'home'
-                    ? ' nav-item home-nav-icon active'
-                    : 'nav-item home-nav-icon'
+                  tab == "home"
+                    ? " nav-item home-nav-icon active"
+                    : "nav-item home-nav-icon"
                 }
               >
-                <Link href={'/dashboard'}>{HomeNav}</Link>
+                <Link href={"/dashboard"}>{HomeNav}</Link>
               </li>
-              <li className={tab == 'users' ? 'nav-item active' : 'nav-item'}>
+              <li className={tab == "users" ? "nav-item active" : "nav-item"}>
                 <div className="parent">
                   <div>
                     <a>Users</a>
@@ -43,7 +45,7 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="">
                         <li>
-                          <Link href={'/manage-users'}>Manage Users</Link>
+                          <Link href={"/manage-users"}>Manage Users</Link>
                         </li>
                         {/* <li>
                           <Link href={''}>Logged-In Users</Link>
@@ -53,7 +55,7 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              <li className={tab == 'reports' ? 'nav-item active' : 'nav-item'}>
+              <li className={tab == "reports" ? "nav-item active" : "nav-item"}>
                 <div className="parent">
                   <div>
                     <a>Incidents</a>
@@ -61,7 +63,7 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="transaction-list">
                         <li>
-                          <Link href={'/incident-reports'}>
+                          <Link href={"/incident-reports"}>
                             Incidents reports
                           </Link>
                         </li>
@@ -90,131 +92,101 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              {/* <li
-                className={
-                  tab == 'pageManagement' ? 'nav-item active' : 'nav-item'
-                }
-              >
-                <div className="parent">
-                  <div>
-                    <a>Page Management</a>
-                    <div className="children">
-                      <div className="backdrop" />
-                      <ul className="">
-                        <li>
-                          <Link href={'/page-management'}>Pages</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+              {[11, 12, 13, 14].includes(user?.role_id) && (
+                <>
+                  <li
+                    className={
+                      tab == "adminMembers" ? "nav-item active" : "nav-item"
+                    }
+                    onMouseOver={() => MouseOver}
+                    onMouseOut={MouseOut}
+                  >
+                    <div className="parent">
+                      <div>
+                        <a>Admin Users</a>
+                        <div className="children">
+                          <div className="backdrop" />
+                          <ul className="">
+                            <li>
+                              <Link href={"/admin-members"}>Users</Link>
+                            </li>
+                            {/* <li>
+                <Link href={'/banks'}>Banks</Link>
               </li> */}
-              <li
-                className={
-                  tab == 'adminMembers' ? 'nav-item active' : 'nav-item'
-                }
-                onMouseOver={() => MouseOver}
-                onMouseOut={MouseOut}
-              >
-                <div className="parent">
-                  <div>
-                    <a>Admin Users</a>
-                    <div className="children">
-                      <div className="backdrop" />
-                      <ul className="">
-                        <li>
-                          <Link href={'/admin-members'}>Users</Link>
-                        </li>
-                        {/* <li>
-                          <Link href={'/banks'}>Banks</Link>
-                        </li> */}
-                        <li>
-                          <Link href={'/partners'}>Partners</Link>
-                        </li>
-                      </ul>
+                            <li>
+                              <Link href={"/partners"}>Partners</Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </li>
-              <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
-                <div className="parent">
-                  <div>
-                    <a>Roles</a>
-                    <div className="children">
-                      <div className="backdrop" />
-                      <ul className="">
-                        <li>
-                          <Link href={'/roles'}>Roles</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
+                  </li>
 
-              {/* <li
-                className={
-                  tab == 'communications' ? 'nav-item active' : 'nav-item '
-                }
-              >
-                <div className="parent">
-                  <div>
-                    <a>Communications</a>
-                    <div className="children">
-                      <div className="backdrop" />
+                  <li
+                    className={tab == "roles" ? "nav-item active" : "nav-item "}
+                  >
+                    <div className="parent">
+                      <div>
+                        <a>Roles</a>
+                        <div className="children">
+                          <div className="backdrop" />
+                          <ul className="">
+                            <li>
+                              <Link href={"/roles"}>Roles</Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </li> */}
+                  </li>
+                </>
+              )}
 
               <li
-                className={
-                  tab == 'settings' ? 'nav-item active' : 'nav-item '
-                }
+                className={tab == "settings" ? "nav-item active" : "nav-item "}
               >
                 <div className="parent">
                   <div>
                     <a>Settings</a>
                     <div className="children">
                       <div className="backdrop" />
-                      <ul className="" style={{ maxWidth: '100%' }}>
-                        <li style={{ maxWidth: '100%' }}>
-                          <Link href={'/allBank'}> 
-                            Banks
-                          </Link>
+                      <ul className="" style={{ maxWidth: "100%" }}>
+                        <li style={{ maxWidth: "100%" }}>
+                          <Link href={"/allBank"}>Banks</Link>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </li>
-
-              <li
-                className={
-                  tab == 'configurations' ? 'nav-item active' : 'nav-item '
-                }
-              >
-                <div className="parent">
-                  <div>
-                    <a>Configurations</a>
-                    <div className="children last">
-                      <div className="backdrop" />
-                      <ul className="" style={{ maxWidth: '100%' }}>
-                        <li style={{ maxWidth: '100%' }}>
-                          <Link href={'/app-configuration'}>
-                            App Configuration{' '}
-                          </Link>
-                        </li>
-                        <li style={{ maxWidth: '100%' }}>
-                          <Link href={'/admin-configuration'}>
-                            Admin Configuration{' '}
-                          </Link>
-                        </li>
-                      </ul>
+              {[11, 12, 13, 14].includes(user?.role_id) && (
+                <li
+                  className={
+                    tab == "configurations" ? "nav-item active" : "nav-item "
+                  }
+                >
+                  <div className="parent">
+                    <div>
+                      <a>Configurations</a>
+                      <div className="children last">
+                        <div className="backdrop" />
+                        <ul className="" style={{ maxWidth: "100%" }}>
+                          <li style={{ maxWidth: "100%" }}>
+                            <Link href={"/app-configuration"}>
+                              App Configuration{" "}
+                            </Link>
+                          </li>
+                          <li style={{ maxWidth: "100%" }}>
+                            <Link href={"/admin-configuration"}>
+                              Admin Configuration{" "}
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              )}
             </ul>
           </div>
         </div>

@@ -6,18 +6,14 @@ import HomeTable from '../components/HomeTable';
 import Welcome from '../components/Welcome';
 import HomeIncidents from '../src/components/HomeIncidents';
 
-
-export default function Home() {
- 
-
-
+export default function Home({ userRole }) {
   return (
     <>
       <Head>
         <title>Vigilant|home</title>
       </Head>
       <Welcome />
-      <BreadCrumb tab={'home'} />
+      <BreadCrumb tab={'home'}/>
       <Cards />
       <HomeIncidents />
       <HomeGraph />
