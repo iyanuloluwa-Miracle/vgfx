@@ -608,7 +608,7 @@ export default function ManageUsers() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by username, email address, phone number"
+                placeholder="Search by username"
                 onSearch={onSearch}
                 className="searching"
                 value={searchQuery}

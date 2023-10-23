@@ -248,7 +248,7 @@ export default function TransactionReports() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by Username, tracking ID, reference..."
+                placeholder="Search by Username"
                 // onSearch={onSearch}
                 className="searching"
                 value={searchQuery}

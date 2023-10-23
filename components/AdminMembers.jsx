@@ -84,7 +84,18 @@ export default function AdminMembers() {
     console.log("Success:", values);
   };
 
-  const onSearch = (value) => console.log(value);
+  const onSearch = (value) => {
+    // Filter the data based on the search input
+    const filteredData = combinedData.filter((user) => {
+      const fullName = `${user.first_name} ${user.last_name}`;
+      return fullName.toLowerCase().includes(value.toLowerCase());
+    });
+  
+    // Update the data with the filtered results
+    setData2(filteredData);
+  };
+  
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
     if (value === "all") {
