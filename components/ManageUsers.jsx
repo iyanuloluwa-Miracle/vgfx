@@ -439,33 +439,6 @@ export default function ManageUsers() {
 
   
 
-  const handleExportToCSV = () => {
-    const csvData = [
-      ["Full Name", "Username", "Email Address", "Mobile", "Date Registered", "Total Reports", "Status"],
-      ...data.map(item => [
-        item.fullName,
-        item.username,
-        item.email,
-        item.phone,
-        item.dateRegistered,
-        item.report,
-        item.status,
-      ]),
-    ];
-  
-    // Create a data URI for the CSV file
-    const csvDataURI = "data:text/csv;charset=utf-8," + encodeURIComponent(csvData.map(row => row.join(",")).join("\n"));
-  
-    // Create an anchor element and simulate a click to trigger the download
-    const link = document.createElement("a");
-    link.setAttribute("href", csvDataURI);
-    link.setAttribute("download", "user_data.csv");
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-  
 
 
 
@@ -590,6 +563,22 @@ export default function ManageUsers() {
   const [passphrase, setPassphrase] = useState('');
   const [outputText, setOutputText] = useState('');
 
+
+  function exportToCSV(data) {
+    const csvContent = "data:text/csv;charset=utf-8,";
+    const headers = Object.keys(data[0]).join(",");
+    const csvData = data.map((row) => Object.values(row).join(",")).join("\n");
+    const csv = `${headers}\n${csvData}`;
+    const encodedUri = encodeURI(csvContent + csv);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "exported_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+
   
 
 
@@ -597,7 +586,7 @@ export default function ManageUsers() {
   return (
     <section>
 
-      <CSVLink data={incidentsData} filename={'exported-data.csv'}>
+      <CSVLink data={data} filename={'exported-data.csv'}>
         <ExportZone h4="All Users" />
       </CSVLink>
 

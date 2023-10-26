@@ -584,6 +584,20 @@ export default function ManageUsers() {
     setFilteredData(filtered);
   }, [currentPage, searchQuery]);
 
+  function exportToCSV(data) {
+    const csvContent = "data:text/csv;charset=utf-8,";
+    const headers = Object.keys(data[0]).join(",");
+    const csvData = data.map((row) => Object.values(row).join(",")).join("\n");
+    const csv = `${headers}\n${csvData}`;
+    const encodedUri = encodeURI(csvContent + csv);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "exported_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 
 
   
@@ -593,7 +607,7 @@ export default function ManageUsers() {
   return (
     <section>
 
-      <CSVLink data={incidentsData} filename={'exported-data.csv'}>
+      <CSVLink data={data} filename={'exported-data.csv'}>
         <ExportZone h4="All Users" />
       </CSVLink>
 
