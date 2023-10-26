@@ -251,10 +251,11 @@ export default function Profile({ activeStatus }) {
           )}
         </div>
         <div className={isActive ? 'deactivate' : 'deactivate activate'}>
-          <Button className="edit-user" onClick={() => setModalAddPage(true)}>
+          
+          {/* <Button className="edit-user" onClick={() => setModalAddPage(true)}>
             Edit user
-          </Button>
-          {isActive ? (
+          </Button> */}
+          {/* {isActive ? (
             <Button
               style={{
                 background: '#FAEFF0',
@@ -274,7 +275,7 @@ export default function Profile({ activeStatus }) {
             >
               Deactivate
             </Button>
-          )}
+          )} */}
         </div>
       </div>
 
