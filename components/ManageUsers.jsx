@@ -366,9 +366,9 @@ export default function ManageUsers() {
 
     const filtered = slicedData.filter((item) => {
       return (
-        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.username.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+        item.email.toUpperCase().includes(searchQuery.toUpperCase()) ||
+        item.username.toUpperCase().includes(searchQuery.toUpperCase())
+    );
     });
 
     setFilteredData(filtered);
@@ -418,9 +418,9 @@ export default function ManageUsers() {
   const filterData = () => {
     const filtered = data.filter(item => {
       return (
-        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.username.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+        item.email.toUpperCase().includes(searchQuery.toUpperCase()) ||
+        item.username.toUpperCase().includes(searchQuery.toUpperCase())
+    );
     });
     setFilteredData(filtered);
   };
@@ -612,7 +612,7 @@ export default function ManageUsers() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by username"
+                placeholder="Search by Fullname"
                 onSearch={onSearch}
                 className="searching"
                 value={searchQuery}
