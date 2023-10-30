@@ -136,7 +136,7 @@ export default function AdminMembers() {
     );
 
     setSunmitLoading(true);
-    window.location.reload();
+   
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json", // Adjust content type if needed
@@ -156,10 +156,15 @@ export default function AdminMembers() {
         payload,
         headers
       );
-
+      console.log("API Response:", res);
       if (res) {
+        console.log(res,"This is a window bbug")
+
         toast.success(res.message);
+        window.location.reload();
+
       }
+
     } catch (error) {
       console.error(error);
     } finally {
